@@ -14,8 +14,8 @@ apiController.getDecks = async (req, res, next) => {
     const data = await db.query(query);
     const allDecks = data.rows;
     const userDecks = {};
+    userDecks['user_id'] = user_id;
     allDecks.map((element) => {
-      userDecks['user_id'] = element.user_id;
       userDecks[element.deck_name] = element.deck_id;
     });
     res.locals.getDecks = userDecks;
