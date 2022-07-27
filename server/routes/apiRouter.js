@@ -15,14 +15,14 @@ router.post('/getCards', apiController.getCards, (req, res) => {
   res.status(200).json(res.locals.getCards);
 });
 
-router.post('/createDeck', (req, res) => {
+router.post('/createDeck', apiController.createDeck, (req, res) => {
   console.log('Deck is created!');
-  res.status(200).json('hi');
+  res.status(200).json(res.locals.data);
 });
 
-router.post('/createCard', (req, res) => {
+router.post('/createCard', apiController.createCard, (req, res) => {
   console.log('Card is created!');
-  res.status(200).json('hi');
+  res.status(200).json(res.locals.data);
 });
 
 // router.post('/deleteDeck', (req, res) => {

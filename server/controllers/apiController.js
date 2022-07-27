@@ -47,4 +47,51 @@ apiController.getCards = async (req, res, next) => {
   }
 };
 
+apiController.createDeck = async (req, res, next) => {
+  const { deck_name, user_id } = req.body;
+
+  try {
+    const query = {
+      text: 'INSERT INTO decks (deck_name, user_id) VALUES ($1, $2) RETURNING deck_name, deck_id',
+      values: [deck_name, user_id]
+    };
+
+    const data = await db.query(query);
+    console.log(data);
+    res.locals.data = {
+      [data.rows[0].deck_name]: data.rows[0].deck_id
+    };
+    return next();
+
+  } catch {
+    return next({
+      log: 'Express error handler caught error in apiController.createDeck',
+      message: { err: 'An error occurred in creating a deck' },
+    });
+  }
+};
+
+
+apiController.createCard = async (req, res, next) => {
+  const { deck_id, question, answer, favorite, iscode, tags } = req.body;
+
+  try {
+    const query = {
+      text: 'INSERT INTO cards (deck_id, question, answer, favorite, iscode, tags) VALUES ($1, $2, $3, $4, $5, $6) RETURNING card_id, question, answer, favorite, iscode, tags',
+      values: [deck_id, question, answer, favorite, iscode, tags]
+    };
+
+    const data = await db.query(query);
+    console.log(data);
+    res.locals.data = data.rows[0];
+    return next();
+
+  } catch {
+    return next({
+      log: 'Express error handler caught error in apiController.createCard',
+      message: { err: 'An error occurred in creating a card' },
+    });
+  }
+};
+
 module.exports = apiController;
