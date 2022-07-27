@@ -7,6 +7,9 @@ node_modules/
 # output from webpack
 dist/
 
+# dot env
+.env
+
 #package-lock
 package-lock.json
 
