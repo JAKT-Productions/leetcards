@@ -48,11 +48,7 @@ module.exports = {
     template: 'index.html'
   })],
   resolve: {
-<<<<<<< HEAD
-    extensions: ['.tsx', '.ts', '.jsx', '.js'],
-=======
     extensions: ['.jsx', '.js'],
->>>>>>> dev
   },
 };
 
