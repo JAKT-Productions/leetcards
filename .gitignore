@@ -10,5 +10,4 @@ dist/
 #package-lock
 package-lock.json
 
-#.env
 .env

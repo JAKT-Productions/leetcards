@@ -3,7 +3,8 @@ const db = require('../models/appModel');
 const apiController = {};
 
 apiController.getDecks = async (req, res, next) => {
-  const { user_id } = req.body;
+  // const { user_id } = req.body;
+  const { user_id } = res.locals.response;
 
   try {
     const query = {
@@ -18,7 +19,6 @@ apiController.getDecks = async (req, res, next) => {
       userDecks[element.deck_name] = element.deck_id;
     });
     res.locals.getDecks = userDecks;
-
     return next();
   } catch (err) {
     next({

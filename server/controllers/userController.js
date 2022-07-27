@@ -53,7 +53,7 @@ userController.verifyUser = async (req, res, next) => {
 
     const data = await db.query(queryObj);
 
-    if (!data.length)
+    if (data.length === 0)
       return res.status(200).json({ status: "error", errorMsg: "Username not found!" });
 
     const storedPassword = data.rows[0].password;

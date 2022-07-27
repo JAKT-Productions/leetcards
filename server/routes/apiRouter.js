@@ -5,10 +5,10 @@ const router = express.Router();
 const apiController = require('../controllers/apiController');
 
 // Getting all the data including user info, decks, cards, tags.
-router.post('/getDecks', apiController.getDecks, (req, res) => {
-  console.log('Data Requested');
-  res.status(200).json(res.locals.getDecks);
-});
+// router.post('/getDecks', apiController.getDecks, (req, res) => {
+//   console.log('Data Requested');
+//   res.status(200).json(res.locals.getDecks);
+// });
 
 router.post('/getCards', apiController.getCards, (req, res) => {
   console.log('Data Requested');
