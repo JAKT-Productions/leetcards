@@ -9,48 +9,85 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-// import StyleIcon from '@mui/icons-material/MoveToInbox';
-// import StyleIcon from '@mui/icons-material/Mail';
 import StyleIcon from '@mui/icons-material/Style';
 import TextField from '@mui/material/TextField';
 
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 
-export default function DeckDrawer() {
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  });
-  
+export default function DeckDrawer({data, setData}) {
   const [DeckNames, setDeckNames] = useState(['Deck1', 'Deck2', 'Deck3', 'Deck4', 'Deck5']);
+  const [DeckIDs, setDeckIDs] = useState([]);
   const [drawerContents, setDrawerContents] = useState();
+  /*
+  {
+    user_id: user_id (integer)
+    deckName ("Tarik"): deck_id,
+    deckName ("Alina"): deck_id...
+  }
 
+  post req
+  {
+    deck_name: data.get('deck-input'),
+    user_id: data.user_id
+  }
+response will look like (The created deck):
+  {
+    deckName ("Jin"): deck_id
+  }
+  setData({...data, ...response});
+  */
 
-  const addDeck = (event) => {
+  const addDeck = async (event) => {
       event.preventDefault();
-      const data = new FormData(event.currentTarget);
-
+      const inputData = new FormData(event.currentTarget);
     // Access text field
-    const deckName = document.getElementById('deck-input');
-    console.log(deckName);
-     setDeckNames((prevDecks)=>{
-      [...prevDecks, 'Deck6']
-    })
+    // const deckName = document.getElementById('deck-input');
+    // console.log(deckName);
+    if (!DeckNames.includes(inputData.get('deck-input')) && inputData.get('deck-input') !== 'user_id' && inputData.get('deck-input') !== '') {
+
+      try {
+        const response = await fetch('/api/createDeck', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(  {
+            deck_name: inputData.get('deck-input'),
+            user_id: data.user_id
+          })
+        });
+        console.log('Try block\n')
+        const content = await response.json();
+        setData({...data, ...content});
+    
+      } catch(err){
+        window.alert('Deck Creation Failed');
+      }
+    }
+
+      // setDeckNames(
+      //   [...DeckNames, inputData.get('deck-input')]
+      // );
+  };
     // console.log("hi"); Note, current version doesn't have access to text in input field 1:50pm
     // If text field is not empty --> submit a POST request to database
     // on success --> add deck to decklist & store response in state --> clear text field
-  };
 
-  // const toggleDrawer = (anchor, open) => (event) => {
-  //   if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-  //     return;
-  //   }
+  useEffect(()=> {  
+    const idArr = [];
+    const deckArr = [];
+    for (const [key, value] of Object.entries(data)) {
+      if (key !== 'user_id') {
+        idArr.push(value);
+        deckArr.push(key);
+      }
+    }
+    setDeckNames(deckArr);
+    setDeckIDs(idArr);
 
-  //   setState({ ...state, [anchor]: open });
-  // };
+  },[data]);
 
   useEffect(()=> {
     const sidebar = list('left');
@@ -61,12 +98,10 @@ export default function DeckDrawer() {
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
       role="presentation"
-      // onClick={toggleDrawer(anchor, false)}
-      // onKeyDown={toggleDrawer(anchor, false)}
     >
-      Hello
+      <h1>Hello, User!</h1>
       <Divider />
-      <Box sx={{ '& > :not(style)': { m: 1 } }} onSubmit={addDeck}>
+      <Box sx={{ '& > :not(style)': { m: 1 } }} component="form" onSubmit={addDeck}>
         <h2>Decks</h2>
         <>
           <TextField
@@ -83,8 +118,8 @@ export default function DeckDrawer() {
       </Box>
       <List>
         {[...DeckNames].map((text, index) => (
-          <ListItem key={text} onClick={console.log("render deck cards logic here")} disablePadding>
-            <ListItemButton>
+          <ListItem key={text} disablePadding>
+            <ListItemButton onClick={()=>{console.log("HELLO", "render deck cards logic here", DeckIDs[index])}}>
               <ListItemIcon>
                 {index % 2 === 0 ? <StyleIcon /> : <StyleIcon />}
               </ListItemIcon>
@@ -97,20 +132,10 @@ export default function DeckDrawer() {
   );
 
   return (
-    <div>
-      {['left'].map((anchor) => (
-        <React.Fragment key={anchor}>
-          {/* <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button> */}
-          <Drawer
-            variant="permanent"
-            anchor={anchor}
-            open={state[anchor]}
-            // onClose={toggleDrawer(anchor, false)}
-          >
-            {drawerContents}
-          </Drawer>
-        </React.Fragment>
-      ))}
-    </div>
+    <>
+      <Drawer variant="permanent" anchor={'left'}>
+        {drawerContents}
+      </Drawer>
+    </>
   );
 }
