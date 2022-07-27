@@ -9,7 +9,7 @@ router.post('/signup', userController.createUser, (req, res) => {
 });
 
 router.post('/login', userController.verifyUser, apiController.getDecks, (req, res) => {
-    console.log('sign up successful');
+    console.log('login successful');
     res.status(200).json(res.locals.getDecks);
 });
 

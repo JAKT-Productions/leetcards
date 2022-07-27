@@ -1,6 +1,5 @@
-import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
 
-export const themeOptions = {
+const themeOptions = {
   palette: {
     type: 'light',
     primary: {
@@ -11,3 +10,4 @@ export const themeOptions = {
     },
   },
 };
+export default themeOptions;
