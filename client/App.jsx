@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 // Import components and pages
-import DashboardView from './Views/DashboardView';
-import LoginView from './Views/LoginView';
+import DashboardView from './Views/DashboardView.jsx';
+import LoginView from './Views/LoginView.jsx';
 import SignupView from './Views/SignupView';
 import StudyView from './Views/StudyView';
 
