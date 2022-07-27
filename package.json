@@ -14,7 +14,11 @@
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
+<<<<<<< HEAD
+    "@mui/icons-material": "latest",
+=======
     "@mui/icons-material": "^5.8.4",
+>>>>>>> dev
     "@mui/material": "^5.9.2",
     "@reduxjs/toolkit": "^1.8.3",
     "axios": "^0.27.2",
