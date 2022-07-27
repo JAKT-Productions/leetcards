@@ -12,10 +12,15 @@ import ListItemText from '@mui/material/ListItemText';
 import StyleIcon from '@mui/icons-material/Style';
 import TextField from '@mui/material/TextField';
 
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+import { deepPurple } from '@mui/material/colors';
+
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
+import { Typography } from '@mui/material';
 
-export default function DeckDrawer({data, setData}) {
+export default function DeckDrawer({data, setData, cards, setCards}) {
   const [DeckNames, setDeckNames] = useState(['Deck1', 'Deck2', 'Deck3', 'Deck4', 'Deck5']);
   const [DeckIDs, setDeckIDs] = useState([]);
   const [drawerContents, setDrawerContents] = useState();
@@ -37,6 +42,27 @@ response will look like (The created deck):
   }
   setData({...data, ...response});
   */
+  const getCards = async (deck_id) => {
+    try {
+      const cards = await fetch('/api/getCards', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          deck_id: deck_id
+        })
+      });
+
+      const parsedCard = await cards.json();
+      console.log("carddata",parsedCard);
+      setCards(parsedCard);
+
+    } catch(err) {
+      alert('Loading Cards Failed...')
+    }
+  }
 
   const addDeck = async (event) => {
       event.preventDefault();
@@ -99,10 +125,17 @@ response will look like (The created deck):
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
       role="presentation"
     >
-      <h1>Hello, User!</h1>
+      <Stack direction="row" spacing={2}>
+        <Avatar
+          // sx={{ bgcolor: deepOrange[500] }}
+          alt="Kevin"
+          src="/broken-image.jpg"
+        />
+        <Typography variant="h6">Hello, Kevin!</Typography>
+      </Stack>
       <Divider />
       <Box sx={{ '& > :not(style)': { m: 1 } }} component="form" onSubmit={addDeck}>
-        <h2>Decks</h2>
+      <Typography variant="h6">Decks</Typography>
         <>
           <TextField
               id="deck-input"
@@ -119,7 +152,7 @@ response will look like (The created deck):
       <List>
         {[...DeckNames].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton onClick={()=>{console.log("HELLO", "render deck cards logic here", DeckIDs[index])}}>
+            <ListItemButton onClick={()=>{getCards(DeckIDs[index])}}>
               <ListItemIcon>
                 {index % 2 === 0 ? <StyleIcon /> : <StyleIcon />}
               </ListItemIcon>

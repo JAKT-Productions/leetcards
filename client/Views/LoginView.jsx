@@ -12,8 +12,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import themeOptions from '../theme';
 import { useNavigate } from "react-router-dom";
-
-const theme = createTheme();
+import logo from '../img/leetcards_blackwhite.png';
+const theme = createTheme(themeOptions);
 
 
 export default function LoginView({setData}) {
@@ -58,9 +58,11 @@ export default function LoginView({setData}) {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
-          </Avatar>
+            <img src={logo}/>
+          </Avatar> */}
+          <img style={{width: "85%"}} src={logo}/>
           <Typography component="h1" variant="h5">
             Login
           </Typography>
