@@ -1,13 +1,13 @@
 const express = require('express');
-
+const userController = require('../controllers/userController');
 const router = express.Router();
 
-router.post('/signup', (req, res) => {
+router.post('/signup', userController.createUser, (req, res) => {
     console.log('sign up successful');
-    res.status(200).json(res.locals.response);
+    res.status(200).json(res.locals.id);
 });
 
-router.post('/login', (req, res) => {
+router.post('/login', userController.verifyUser, (req, res) => {
     console.log('sign up successful');
     res.status(200).json(res.locals.response);
 });
