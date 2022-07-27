@@ -13,6 +13,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/api/**': 'http://localhost:3000',
+      '/user/**': 'http://localhost:3000'
     },
     static: {
       directory: path.join(__dirname, 'dist'),
