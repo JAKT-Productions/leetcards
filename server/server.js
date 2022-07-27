@@ -19,7 +19,7 @@ app.use(express.static(path.resolve(__dirname, '../client')));
 
 // serve index.html on the route '/'
 app.get('/', (req, res) => {
-    return res.status(200).sendFile(path.join(__dirname, '../index.html'))
+    return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
 
 /* route request to router */
