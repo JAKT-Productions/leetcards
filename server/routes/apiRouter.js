@@ -5,24 +5,24 @@ const router = express.Router();
 const apiController = require('../controllers/apiController');
 
 // Getting all the data including user info, decks, cards, tags.
-router.post('/getDecks', apiController.getDecks, (req, res) => {
-  console.log('Data Requested');
-  res.status(200).json(res.locals.getDecks);
-});
+// router.post('/getDecks', apiController.getDecks, (req, res) => {
+//   console.log('Data Requested');
+//   res.status(200).json(res.locals.getDecks);
+// });
 
 router.post('/getCards', apiController.getCards, (req, res) => {
   console.log('Data Requested');
   res.status(200).json(res.locals.getCards);
 });
 
-router.post('/createDeck', (req, res) => {
+router.post('/createDeck', apiController.createDeck, (req, res) => {
   console.log('Deck is created!');
-  res.status(200).json('hi');
+  res.status(200).json(res.locals.data);
 });
 
-router.post('/createCard', (req, res) => {
+router.post('/createCard', apiController.createCard, (req, res) => {
   console.log('Card is created!');
-  res.status(200).json('hi');
+  res.status(200).json(res.locals.data);
 });
 
 // router.post('/deleteDeck', (req, res) => {
