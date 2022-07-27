@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: process.env.NODE_ENV,
-  entry: './client/index.js',
+  entry: './client/index.jsx',
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
@@ -46,6 +46,9 @@ module.exports = {
   },
   plugins: [new HtmlWebpackPlugin({
     template: 'index.html'
-  })]
+  })],
+  resolve: {
+    extensions: ['.tsx', '.ts', '.jsx', '.js'],
+  },
 };
 

@@ -13,7 +13,8 @@ export default function App() {
 
   return (
     <Routes>
-      <Route path={'/'} element={<LoginView setData={setData}/>} />
+      <Route path={'/'} element={<DashboardView/>} />
+      {/* <Route path={'/'} element={<LoginView setData={setData}/>} />
       <Route path="/signup" element={<SignupView />} />
 
       <Route
@@ -25,7 +26,7 @@ export default function App() {
             'Invalid permissions'
           )
         }
-      />
+      /> */}
     </Routes>
   );
 }
