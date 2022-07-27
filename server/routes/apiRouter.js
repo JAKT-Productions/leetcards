@@ -4,8 +4,8 @@ const router = express.Router();
 
 // Getting all the data including user info, decks, cards, tags.
 router.get('/getCards', (req, res) => {
-    con(200).json('hi');  sole.log('Data Requested');
-    res.status
+    console.log('Data Requested');
+    res.status(200).json('hi');  
 });
 
 router.post('/createDeck', (req, res) => {

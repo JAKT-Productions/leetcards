@@ -22,7 +22,6 @@ userController.createUser = async (req, res, next) => {
 
         const workFactor = 10;
         const encryptedpass = await bcrypt.hash(password, workFactor);
-        
         const queryObj = {
             text: "INSERT INTO users (username, password, email) VALUES ($1, $2, $3) RETURNING user_id",
             values: [username, encryptedpass, email]
